@@ -8,6 +8,19 @@ use Sainsburys\Service\ProductFetcher;
 
 class ScrapeCommand
 {
+    /**
+     * @var string $savePath
+     */
+    protected $savePath;
+
+    /**
+     * @param string $savePath
+     */
+    public function __construct($savePath)
+    {
+        $this->savePath = $savePath;
+    }
+
     public function run()
     {
         $client = new Client();
@@ -22,7 +35,10 @@ class ScrapeCommand
             'results' => $products,
             'total'   => $total
         ];
-        var_dump($jsonArray);
-        echo json_encode($jsonArray);
+
+        file_put_contents($this->savePath, json_encode($jsonArray, JSON_PRETTY_PRINT));
+
+        print "\nScrape sucessfull!\n";
+        print "\nResults saved in " . realpath($this->savePath) . "\n";
     }
 }
