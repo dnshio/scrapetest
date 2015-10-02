@@ -48,6 +48,8 @@ class ProductFetcher
         $descriptionNode = $crawler->filter('div.productText > p');
         if ($descriptionNode->count() > 0) {
             $product['description'] = $descriptionNode->first()->text();
+        } else {
+            $product['description'] = ""; //Ensure that description leaf always exists
         }
         $price = $crawler->filter('p.pricePerUnit')->text();
         $price = str_replace('£','', $price);
